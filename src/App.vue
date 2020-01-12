@@ -1,12 +1,35 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <canvas id="planet-chart"></canvas>
   </div>
 </template>
+
+
+<script>
+  import Chart from "chart.js";
+  import planetChartData from './chart-data.js';
+  export default {
+    data() {
+      return {
+        planetChartData: planetChartData,
+      }
+    },
+    mounted() {
+      console.log(this.planetChartData.data)
+      this.createChart('planet-chart', this.planetChartData);
+    },
+    methods: {
+    createChart(chartId, chartData) {
+      const ctx = document.getElementById(chartId);
+      const myChart = new Chart(ctx, {
+        type: chartData.type,
+        data: chartData.data,
+        options: chartData.options,
+      });
+    }
+}
+  }
+</script>
 
 <style>
 #app {
